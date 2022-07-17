@@ -126,6 +126,8 @@
   function takepicture() {
     const context = canvas.getContext("2d");
     if (width && height) {
+      if (cropper) cropper.destroy();
+
       canvas.width = width;
       canvas.height = height;
       context.drawImage(video, 0, 0, width, height);
