@@ -3,10 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <title>AHA DrawIt!</title>
+    <link href="/style.css" rel="stylesheet" />
     <link href="/cropper/cropper.css" rel="stylesheet" />
+    <script src="/script.js"></script>
     <script src="/cropper/cropper.js"></script>
   </head>
   <body>
-    <p>I'm the content</p>
+    <div class="contentarea">
+      <div class="camera">
+        <video id="video">Video stream not available.</video>
+        <button id="startbutton">Take photo</button>
+      </div>
+      <canvas id="canvas"> </canvas>
+      <div class="output">
+        <img id="photo" alt="The screen capture will appear in this box." />
+      </div>
+    </div>
   </body>
 </html>
