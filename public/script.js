@@ -19,6 +19,8 @@
   let photo = null;
   let startbutton = null;
   let cropper = null;
+  let flipbutton = null;
+  let aspectRatio = 4 / 6;
 
   function showViewLiveResultButton() {
     if (window.self !== window.top) {
@@ -43,6 +45,7 @@
     canvas = document.getElementById("canvas");
     photo = document.getElementById("photo");
     startbutton = document.getElementById("startbutton");
+    flipbutton = document.getElementById("flip");
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
@@ -86,6 +89,19 @@
       false
     );
 
+    flip.addEventListener(
+      "click",
+      function (ev) {
+        if (aspectRatio < 1) {
+          aspectRatio = 6 / 4;
+        } else {
+          aspectRatio = 4 / 6;
+        }
+        cropper.setAspectRatio(aspectRatio);
+      },
+      false
+    );
+
     clearphoto();
   }
 
@@ -118,7 +134,7 @@
       photo.setAttribute("src", data);
 
       cropper = new Cropper(photo, {
-        aspectRatio: 4 / 6,
+        aspectRatio,
         crop(event) {
           console.log(event.detail.x);
           console.log(event.detail.y);
