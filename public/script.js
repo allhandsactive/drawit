@@ -3,7 +3,7 @@
   // width to the value defined here, but the height will be
   // calculated based on the aspect ratio of the input stream.
 
-  let width = 320; // We will scale the photo width to this
+  let width = 1440; // We will scale the photo width to this
   let height = 0; // This will be computed based on the input stream
 
   // |streaming| indicates whether or not we're currently streaming
@@ -21,6 +21,9 @@
   let cropper = null;
   let flipbutton = null;
   let aspectRatio = 4 / 6;
+  let photoData = null;
+  let cropData = {};
+  let processbutton = null;
 
   function showViewLiveResultButton() {
     if (window.self !== window.top) {
@@ -46,6 +49,7 @@
     photo = document.getElementById("photo");
     startbutton = document.getElementById("startbutton");
     flipbutton = document.getElementById("flip");
+    processbutton = document.getElementById("process");
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
@@ -102,7 +106,101 @@
       false
     );
 
+    for (let i = 15; i <= 87; i += 9) {
+      const img = document.getElementById(`p${i}`);
+      img.addEventListener(
+        "click",
+        function (ev) {
+          process2(i);
+        },
+        false
+      );
+    }
+
+    for (let i = 1; i < 10; i += 1) {
+      const img = document.getElementById(`p${i}`);
+      img.addEventListener(
+        "click",
+        function (ev) {
+          process3(i);
+        },
+        false
+      );
+    }
+
+    processbutton.addEventListener(
+      "click",
+      function (ev) {
+        fetch("/process1", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...cropData, photo: photoData }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            const { jobId, images } = data;
+            images.forEach((e, i) => {
+              const img = document.getElementById(`p${i * 9 + 15}`);
+              img.src = e;
+              img.setAttribute("data-job-id", jobId);
+            });
+          })
+          .catch((err) => {
+            alert(`Error while processing: ${err}`);
+          });
+      },
+      false
+    );
+
     clearphoto();
+  }
+
+  function process2(choice) {
+    const img = document.getElementById(`p${choice}`);
+    const jobId = img.getAttribute("data-job-id");
+    fetch("/process2", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ jobId, choice }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        data.forEach((e, i) => {
+          const img = document.getElementById(`p${i + 1}`);
+          img.src = e;
+          img.setAttribute("data-job-id", jobId);
+          img.setAttribute("data-choice", choice);
+        });
+      })
+      .catch((err) => {
+        alert(`Error while processing: ${err}`);
+      });
+  }
+
+  function process3(choice) {
+    const img = document.getElementById(`p${choice}`);
+    const jobId = img.getAttribute("data-job-id");
+    const choice1 = parseInt(img.getAttribute("data-choice"), 10);
+    fetch("/process3", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ jobId, choice: choice1 + choice - 5 }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const download = document.getElementById("download");
+        download.style.display = "block";
+        download.href = data;
+      })
+      .catch((err) => {
+        alert(`Error while processing: ${err}`);
+      });
   }
 
   // Fill the photo with an indication that none has been
@@ -134,17 +232,12 @@
 
       const data = canvas.toDataURL("image/png");
       photo.setAttribute("src", data);
+      photoData = data;
 
       cropper = new Cropper(photo, {
         aspectRatio,
         crop(event) {
-          console.log(event.detail.x);
-          console.log(event.detail.y);
-          console.log(event.detail.width);
-          console.log(event.detail.height);
-          console.log(event.detail.rotate);
-          console.log(event.detail.scaleX);
-          console.log(event.detail.scaleY);
+          cropData = event.detail;
         },
       });
     } else {
