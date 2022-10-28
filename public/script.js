@@ -24,6 +24,7 @@
   let photoData = null;
   let cropData = {};
   let processbutton = null;
+  let uploadbutton = null;
 
   function showViewLiveResultButton() {
     if (window.self !== window.top) {
@@ -50,6 +51,7 @@
     startbutton = document.getElementById("startbutton");
     flipbutton = document.getElementById("flip");
     processbutton = document.getElementById("process");
+    uploadbutton = document.getElementById("upload");
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
@@ -93,7 +95,7 @@
       false
     );
 
-    flip.addEventListener(
+    flipbutton.addEventListener(
       "click",
       function (ev) {
         if (aspectRatio < 1) {
@@ -150,6 +152,29 @@
           .catch((err) => {
             alert(`Error while processing: ${err}`);
           });
+      },
+      false
+    );
+
+    uploadbutton.addEventListener(
+      "change",
+      function (ev) {
+        if (!this.files || !this.files[0]) return;
+
+        const context = canvas.getContext("2d");
+        const reader = new FileReader();
+        reader.addEventListener("load", (evt) => {
+          photo.setAttribute("src", evt.target.result);
+          photoData = evt.target.result;
+
+          cropper = new Cropper(photo, {
+            aspectRatio,
+            crop(event) {
+              cropData = event.detail;
+            },
+          });
+        });
+        reader.readAsDataURL(this.files[0]);
       },
       false
     );
