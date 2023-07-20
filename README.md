@@ -20,6 +20,7 @@ From the terminal, do the following:
 - Images from a URL?
 - Generate gcode?
 - Pull in axidraw via a submodule
+- Allow hatch width to be configurable
 
 ## Dependencies
 
