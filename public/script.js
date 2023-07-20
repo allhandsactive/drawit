@@ -135,7 +135,7 @@
       function (ev) {
         for (let i = 0; i < 9; i++) {
           const img = document.getElementById(`p${i * 9 + 15}`);
-          img.src = "images/loading.gif";
+          img.src = "/images/loading.gif";
         }
         document.getElementById("ph1").scrollIntoView(true);
         fetch("/process1", {
@@ -193,7 +193,7 @@
     const jobId = img.getAttribute("data-job-id");
     for (let i = 0; i < 9; i++) {
       const img = document.getElementById(`p${i + 1}`);
-      img.src = "images/loading.gif";
+      img.src = "/images/loading.gif";
     }
     document.getElementById("ph2").scrollIntoView(true);
     fetch("/process2", {
@@ -223,7 +223,7 @@
     const jobId = img.getAttribute("data-job-id");
     const choice1 = parseInt(img.getAttribute("data-choice"), 10);
     const preview = document.getElementById("download-preview");
-    preview.src = "images/loading.gif";
+    preview.src = "/images/loading.gif";
     document.getElementById("ph3").scrollIntoView(true);
 
     fetch("/process3", {
