@@ -17,11 +17,12 @@ From the terminal, do the following:
 
 - Make things look a bit nicer
 - Images from a URL?
-- Hatch
 - Generate gcode?
+- Pull in axidraw via a submodule
 
 ## Dependencies
 
 - imagemagick
 - potrace
 - [Cartoon script](http://www.fmwconcepts.com/imagemagick/cartoon/index.php) for imagemagick (modified and distributed in `bin`)
+- Python 3
