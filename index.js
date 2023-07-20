@@ -14,7 +14,7 @@ const imageDir = path.join(publicDir, "images");
 app.use(
   bodyParser.json({
     limit: "20MB",
-  })
+  }),
 );
 
 app.get("/", (req, res) => {

@@ -83,7 +83,7 @@
           streaming = true;
         }
       },
-      false
+      false,
     );
 
     startbutton.addEventListener(
@@ -92,7 +92,7 @@
         takepicture();
         ev.preventDefault();
       },
-      false
+      false,
     );
 
     flipbutton.addEventListener(
@@ -105,7 +105,7 @@
         }
         cropper.setAspectRatio(aspectRatio);
       },
-      false
+      false,
     );
 
     for (let i = 15; i <= 87; i += 9) {
@@ -115,7 +115,7 @@
         function (ev) {
           process2(i);
         },
-        false
+        false,
       );
     }
 
@@ -126,7 +126,7 @@
         function (ev) {
           process3(i);
         },
-        false
+        false,
       );
     }
 
@@ -153,7 +153,7 @@
             alert(`Error while processing: ${err}`);
           });
       },
-      false
+      false,
     );
 
     uploadbutton.addEventListener(
@@ -176,7 +176,7 @@
         });
         reader.readAsDataURL(this.files[0]);
       },
-      false
+      false,
     );
 
     clearphoto();
