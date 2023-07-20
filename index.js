@@ -34,14 +34,24 @@ app.post("/process3", (req, res) => {
   }
 
   // potrace test01-threshold.bmp -s -o test01.svg
-  const svgFile = path.join(imageDir, `${jobId}.svg`);
+  const time = new Date().valueOf();
+  const svgFile = path.join(imageDir, `${jobId}-${time}.svg`);
   const ret2 = spawnSync("potrace", [bmpFile, "-s", "-o", svgFile]);
+
+  const svgData = fs.readFileSync(svgFile, "utf8");
+  fs.writeFileSync(
+    svgFile,
+    svgData.replace(
+      'fill="#000000" stroke="none"',
+      'fill="#000000" stroke="none" style="fill:none;stroke:#000000;stroke-opacity:1;stroke-width:20.00000003;stroke-dasharray:none"',
+    ),
+  );
 
   if (ret2.status) {
     throw new Error(ret2.stderr.toString("UTF-8"));
   }
 
-  res.json(path.join("images", `${jobId}.svg`));
+  res.json(path.join("images", `${jobId}-${time}.svg`));
 });
 
 app.post("/process2", (req, res) => {
