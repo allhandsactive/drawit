@@ -44,18 +44,22 @@ app.post("/process3", (req, res) => {
 
   // hatch fill
   // python eggbot_hatch.py --hatchSpacing=20 --units=2 --hatchAngle=45 --crossHatch=False --connect_bool=False --inset_dist=0.5 --tolerance=2 --hatchScope=3 ~/Downloads/portrait\(6\).svg > ~/Downloads/hatch.svg
-  const ret3 = spawnSync("python3", [
-    path.join(__dirname, "bin", "ad-ink_lin-x86_392", "eggbot_hatch.py"),
-    "--hatchSpacing=20",
-    "--units=2",
-    "--hatchAngle=45",
-    "--crossHatch=False",
-    "--connect_bool=False",
-    "--inset_dist=0.5",
-    "--tolerance=2",
-    "--hatchScope=3",
-    svgFile,
-  ]);
+  const ret3 = spawnSync(
+    "python3",
+    [
+      path.join(__dirname, "bin", "ad-ink_lin-x86_392", "eggbot_hatch.py"),
+      "--hatchSpacing=20",
+      "--units=2",
+      "--hatchAngle=45",
+      "--crossHatch=False",
+      "--connect_bool=False",
+      "--inset_dist=0.5",
+      "--tolerance=2",
+      "--hatchScope=3",
+      svgFile,
+    ],
+    { cwd: path.join(__dirname, "bin", "ad-ink_lin-x86_392") },
+  );
 
   if (ret3.status) {
     throw new Error(ret3.stderr.toString("UTF-8"));
@@ -71,7 +75,7 @@ app.post("/process3", (req, res) => {
         'fill="#000000" stroke="none" style="fill:none;stroke:#000000;stroke-opacity:1;stroke-width:20.00000003;stroke-dasharray:none"',
       )
       // make hatch strokes bigger
-      .replace("stroke-width:1", "stroke-width:20"),
+      .replaceAll("stroke-width:1", "stroke-width:20"),
   );
 
   res.json(path.join("images", `${jobId}-${time}.svg`));
