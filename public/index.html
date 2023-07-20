@@ -9,12 +9,14 @@
     <script src="/cropper/cropper.js"></script>
   </head>
   <body>
+    <h1>AHA DrawIt!</h1>
     <div class="contentarea">
       <div class="camera">
         <video id="video">Video stream not available.</video>
         <button id="startbutton">Take photo</button>
         <input type="file" id="upload" />
       </div>
+      <h2 id="ph0">Crop the photo</h2>
       <canvas id="canvas"> </canvas>
       <div class="output">
         <img id="photo" alt="The screen capture will appear in this box." />
@@ -24,7 +26,7 @@
         <button id="process">Process Image</button>
       </div>
       <div id="process1">
-        <p>Click the best photo (round 1)</p>
+        <h2 id="ph1">Click the best photo (round 1)</h2>
         <p>
           <img id="p15" width="240" />
           <img id="p24" width="240" />
@@ -42,7 +44,7 @@
         </p>
       </div>
       <div id="process2">
-        <p>Click the best photo (round 2)</p>
+        <h2 id="ph2">Click the best photo (round 2)</h2>
         <p>
           <img id="p1" width="240" />
           <img id="p2" width="240" />
@@ -60,6 +62,8 @@
         </p>
       </div>
       <div id="process3">
+        <h2 id="ph3">Final product</h2>
+        <img id="download-preview" width="240" />
         <a id="download" download="portrait.svg">Download the SVG here!</a>
       </div>
     </div>
