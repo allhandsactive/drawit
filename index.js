@@ -38,15 +38,6 @@ app.post("/process3", (req, res) => {
   const svgFile = path.join(imageDir, `${jobId}-${time}.svg`);
   const ret2 = spawnSync("potrace", [bmpFile, "-s", "-o", svgFile]);
 
-  const svgData = fs.readFileSync(svgFile, "utf8");
-  fs.writeFileSync(
-    svgFile,
-    svgData.replace(
-      'fill="#000000" stroke="none"',
-      'fill="#000000" stroke="none" style="fill:none;stroke:#000000;stroke-opacity:1;stroke-width:20.00000003;stroke-dasharray:none"',
-    ),
-  );
-
   // hatch fill
   // python eggbot_hatch.py --hatchSpacing=20 --units=2 --hatchAngle=45 --crossHatch=False --connect_bool=False --inset_dist=0.5 --tolerance=2 --hatchScope=3 ~/Downloads/portrait\(6\).svg > ~/Downloads/hatch.svg
 
