@@ -47,6 +47,22 @@ app.post("/process3", (req, res) => {
     ),
   );
 
+  // hatch fill
+  // python eggbot_hatch.py --hatchSpacing=20 --units=2 --hatchAngle=45 --crossHatch=False --connect_bool=False --inset_dist=0.5 --tolerance=2 --hatchScope=3 ~/Downloads/portrait\(6\).svg > ~/Downloads/hatch.svg
+
+  const svgData = fs.readFileSync(svgFile, "utf8");
+  fs.writeFileSync(
+    svgFile,
+    // make the strokes bigger for the original
+    svgData
+      .replace(
+        'fill="#000000" stroke="none"',
+        'fill="#000000" stroke="none" style="fill:none;stroke:#000000;stroke-opacity:1;stroke-width:20.00000003;stroke-dasharray:none"',
+      )
+      // make hatch strokes bigger
+      .replace("stroke-width:1", "stroke-width:20"),
+  );
+
   if (ret2.status) {
     throw new Error(ret2.stderr.toString("UTF-8"));
   }
