@@ -133,6 +133,11 @@
     processbutton.addEventListener(
       "click",
       function (ev) {
+        for (let i = 0; i < 9; i++) {
+          const img = document.getElementById(`p${i * 9 + 15}`);
+          img.src = "images/loading.gif";
+        }
+        document.getElementById("ph1").scrollIntoView(true);
         fetch("/process1", {
           method: "POST",
           headers: {
@@ -148,6 +153,7 @@
               img.src = e;
               img.setAttribute("data-job-id", jobId);
             });
+            document.getElementById("ph1").scrollIntoView(true);
           })
           .catch((err) => {
             alert(`Error while processing: ${err}`);
@@ -185,6 +191,11 @@
   function process2(choice) {
     const img = document.getElementById(`p${choice}`);
     const jobId = img.getAttribute("data-job-id");
+    for (let i = 0; i < 9; i++) {
+      const img = document.getElementById(`p${i + 1}`);
+      img.src = "images/loading.gif";
+    }
+    document.getElementById("ph2").scrollIntoView(true);
     fetch("/process2", {
       method: "POST",
       headers: {
@@ -200,6 +211,7 @@
           img.setAttribute("data-job-id", jobId);
           img.setAttribute("data-choice", choice);
         });
+        document.getElementById("ph2").scrollIntoView(true);
       })
       .catch((err) => {
         alert(`Error while processing: ${err}`);
@@ -210,6 +222,10 @@
     const img = document.getElementById(`p${choice}`);
     const jobId = img.getAttribute("data-job-id");
     const choice1 = parseInt(img.getAttribute("data-choice"), 10);
+    const preview = document.getElementById("download-preview");
+    preview.src = "images/loading.gif";
+    document.getElementById("ph3").scrollIntoView(true);
+
     fetch("/process3", {
       method: "POST",
       headers: {
@@ -222,6 +238,9 @@
         const download = document.getElementById("download");
         download.style.display = "block";
         download.href = data;
+        const preview = document.getElementById("download-preview");
+        preview.src = data;
+        document.getElementById("ph3").scrollIntoView(true);
       })
       .catch((err) => {
         alert(`Error while processing: ${err}`);
@@ -265,6 +284,8 @@
           cropData = event.detail;
         },
       });
+
+      document.getElementById("ph0").scrollIntoView(true);
     } else {
       clearphoto();
     }
