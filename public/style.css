@@ -5,15 +5,15 @@ body {
 #video {
   border: 1px solid black;
   box-shadow: 2px 2px 3px black;
-  width: 960px;
-  height: 720px;
+  width: 800px;
+  height: 600px;
 }
 
 #photo {
   border: 1px solid black;
   box-shadow: 2px 2px 3px black;
-  width: 960px;
-  height: 720px;
+  width: 800px;
+  height: 600px;
 }
 
 #canvas {
@@ -21,12 +21,12 @@ body {
 }
 
 .camera {
-  width: 980px;
+  width: 820px;
   display: inline-block;
 }
 
 .output {
-  width: 980px;
+  width: 820px;
   display: inline-block;
   vertical-align: top;
 }
@@ -48,7 +48,6 @@ body {
 .contentarea {
   font-size: 16px;
   font-family: "Lucida Grande", "Arial", sans-serif;
-  width: 1940px;
 }
 
 #control {
