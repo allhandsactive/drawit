@@ -153,6 +153,7 @@
               img.src = e;
               img.setAttribute("data-job-id", jobId);
             });
+            document.getElementById("job-id").innerText = jobId;
             document.getElementById("ph1").scrollIntoView(true);
           })
           .catch((err) => {

@@ -57,3 +57,7 @@ body {
 #download {
   display: none;
 }
+
+#job-container {
+  font-style: italic;
+}
