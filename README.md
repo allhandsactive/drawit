@@ -24,9 +24,9 @@ From the terminal, do the following:
 
 ## Dependencies
 
-- imagemagick
+- imagemagick 7
 - potrace
 - [Cartoon script](http://www.fmwconcepts.com/imagemagick/cartoon/index.php) for imagemagick (modified and distributed in `bin`)
 - Python 3
 - eggbot_hatch.py (and deps) included in `bin`
-- Python lxml
+- Python lxml (installed from pip, or as a system package)
