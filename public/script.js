@@ -173,12 +173,16 @@
           photo.setAttribute("src", evt.target.result);
           photoData = evt.target.result;
 
+          if (cropper) cropper.destroy();
+
           cropper = new Cropper(photo, {
             aspectRatio,
             crop(event) {
               cropData = event.detail;
             },
           });
+
+          document.getElementById("ph0").scrollIntoView(true);
         });
         reader.readAsDataURL(this.files[0]);
       },
