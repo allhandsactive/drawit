@@ -30,3 +30,7 @@ From the terminal, do the following:
 - Python 3
 - eggbot_hatch.py (and deps) included in `bin`
 - Python lxml (installed from pip, or as a system package)
+
+## systemd unit
+
+Symlink or copy drawit.service to /lib/systemd/system and then enable and start. Assumes installation in /srv/drawit and a drawit user.

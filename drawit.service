@@ -1,0 +1,14 @@
+[Unit]
+Description=Draw It!
+Documentation=https://github.com/allhandsactive/drawit
+After=network.target
+
+[Service]
+Type=simple
+User=drawit
+ExecStart=/usr/bin/node /srv/drawit/index.js
+Restart=on-failure
+WorkingDirectory=/srv/drawit
+
+[Install]
+WantedBy=multi-user.target
