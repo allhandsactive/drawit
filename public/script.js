@@ -25,6 +25,7 @@
   let cropData = {};
   let processbutton = null;
   let uploadbutton = null;
+  let landscape = false;
 
   function showViewLiveResultButton() {
     if (window.self !== window.top) {
@@ -99,9 +100,13 @@
       "click",
       function (ev) {
         if (aspectRatio < 1) {
+          // landscape
           aspectRatio = 6 / 4;
+          landscape = true;
         } else {
+          // portrait
           aspectRatio = 4 / 6;
+          landscape = false;
         }
         cropper.setAspectRatio(aspectRatio);
       },
@@ -236,7 +241,7 @@
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ jobId, choice: choice1 + choice - 5 }),
+      body: JSON.stringify({ jobId, choice: choice1 + choice - 5, landscape }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -245,6 +250,11 @@
         download.href = data;
         const preview = document.getElementById("download-preview");
         preview.src = data;
+        if (landscape) {
+          preview.style = "transform: rotate(90deg)";
+        } else {
+          preview.style = "transform: rotate(180deg)";
+        }
         document.getElementById("ph3").scrollIntoView(true);
       })
       .catch((err) => {

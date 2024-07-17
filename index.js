@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/process3", (req, res) => {
-  const { jobId, choice } = req.body;
+  const { jobId, choice, landscape } = req.body;
 
   const thresFile = path.join(imageDir, `${jobId}-thres-${choice}.png`);
   const bmpFile = path.join(imageDir, `${jobId}-thres-${choice}.bmp`);
@@ -33,10 +33,30 @@ app.post("/process3", (req, res) => {
     throw new Error(ret1.stderr.toString("UTF-8"));
   }
 
+  let width = "100mm";
+  let height = "130mm";
+  let rotate = "180";
+  if (landscape) {
+    width = "130mm";
+    height = "100mm";
+    rotate = "90";
+  }
+
   // potrace test01-threshold.bmp -s -o test01.svg
   const time = new Date().valueOf();
   const svgFile = path.join(imageDir, `${jobId}-${time}.svg`);
-  const ret2 = spawnSync("potrace", [bmpFile, "-s", "-o", svgFile]);
+  const ret2 = spawnSync("potrace", [
+    bmpFile,
+    "-s",
+    "-W",
+    width,
+    "-H",
+    height,
+    "-A",
+    rotate,
+    "-o",
+    svgFile,
+  ]);
 
   if (ret2.status) {
     throw new Error(ret2.stderr.toString("UTF-8"));
