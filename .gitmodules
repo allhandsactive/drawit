@@ -1,0 +1,3 @@
+[submodule "svg2gcode"]
+	path = svg2gcode
+	url = https://github.com/sameer/svg2gcode.git
