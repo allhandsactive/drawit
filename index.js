@@ -116,6 +116,13 @@ app.post("/process1", (req, res) => {
   const uploadFile = path.join(imageDir, `${jobId}.png`);
   fs.writeFileSync(uploadFile, base64Image, { encoding: "base64" });
 
+  let resize;
+  if (parseInt(width, 10) >= parseInt(height, 10)) {
+    resize = "1000x";
+  } else {
+    resize = "x1000";
+  }
+
   const grayFile = path.join(imageDir, `${jobId}-gray.png`);
   const ret1 = spawnSync("magick", [
     "convert",
@@ -127,6 +134,8 @@ app.post("/process1", (req, res) => {
     "-average",
     "-crop",
     `${width}x${height}+${x}+${y}`,
+    "-resize",
+    resize,
     grayFile,
   ]);
 
