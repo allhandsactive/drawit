@@ -106,3 +106,4 @@ dist
 /public/images/*.png
 /public/images/*.bmp
 /public/images/*.svg
+/public/images/*.gcode
