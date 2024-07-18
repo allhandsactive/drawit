@@ -115,7 +115,7 @@ app.post("/process3", (req, res) => {
       "--off",
       "\ng0 z3",
       "--on",
-      "\ng0 z0",
+      "\n;tool on\ng0 z0",
       "--out",
       gcodeFile,
       svgFile,
