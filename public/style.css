@@ -54,7 +54,8 @@ body {
   margin: 1em;
 }
 
-#download {
+#download,
+#download-gcode {
   display: none;
 }
 

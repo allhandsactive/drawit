@@ -247,15 +247,18 @@
       .then((data) => {
         const download = document.getElementById("download");
         download.style.display = "block";
-        download.href = data;
+        download.href = data.svg;
         const preview = document.getElementById("download-preview");
-        preview.src = data;
+        preview.src = data.svg;
         if (landscape) {
           preview.style = "transform: rotate(90deg)";
         } else {
           preview.style = "transform: rotate(180deg)";
         }
         document.getElementById("ph3").scrollIntoView(true);
+        const downloadGcode = document.getElementById("download-gcode");
+        downloadGcode.style.display = "block";
+        downloadGcode.href = data.gcode;
       })
       .catch((err) => {
         alert(`Error while processing: ${err}`);

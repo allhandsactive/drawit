@@ -30,6 +30,7 @@ From the terminal, do the following:
 - Python 3
 - eggbot_hatch.py (and deps) included in `bin`
 - Python lxml (installed from pip, or as a system package)
+- Compile the gcode translator: `cargo b --release`
 
 ## systemd unit
 

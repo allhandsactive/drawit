@@ -98,7 +98,38 @@ app.post("/process3", (req, res) => {
       .replaceAll("stroke-width:1", "stroke-width:20"),
   );
 
-  res.json(path.join("images", `${jobId}-${time}.svg`));
+  // svg2gcode --feedrate 9000 --origin 0,0 --dpi 96 --end 'G0 X-100 Y0 z3' --off 'g0 z3' --on 'g0 z0' --out test.gcode test.svg
+
+  const gcodeFile = path.join(imageDir, `${jobId}-${time}.gcode`);
+  const ret4 = spawnSync(
+    path.join(__dirname, "svg2gcode", "target", "release", "svg2gcode"),
+    [
+      "--feedrate",
+      "9000",
+      "--origin",
+      "0,0",
+      "--dpi",
+      "96",
+      "--end",
+      "G0 X-100 Y0 z3",
+      "--off",
+      "g0 z3",
+      "--on",
+      "g0 z0",
+      "--out",
+      gcodeFile,
+      svgFile,
+    ],
+  );
+
+  if (ret4.status) {
+    throw new Error(ret4.stderr.toString("UTF-8"));
+  }
+
+  res.json({
+    svg: path.join("images", `${jobId}-${time}.svg`),
+    gcode: path.join("images", `${jobId}-${time}.gcode`),
+  });
 });
 
 app.post("/process2", (req, res) => {
