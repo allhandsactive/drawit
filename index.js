@@ -33,12 +33,12 @@ app.post("/process3", (req, res) => {
     throw new Error(ret1.stderr.toString("UTF-8"));
   }
 
-  let width = "100mm";
-  let height = "130mm";
+  let width = "90mm";
+  let height = "117mm";
   let rotate = "180";
   if (landscape) {
-    width = "130mm";
-    height = "100mm";
+    width = "117mm";
+    height = "90mm";
     rotate = "90";
   }
 
@@ -169,9 +169,9 @@ app.post("/process1", (req, res) => {
 
   let resize;
   if (parseInt(width, 10) >= parseInt(height, 10)) {
-    resize = "1000x";
+    resize = "750x";
   } else {
-    resize = "x1000";
+    resize = "x750";
   }
 
   const grayFile = path.join(imageDir, `${jobId}-gray.png`);
