@@ -113,7 +113,7 @@ app.post("/process3", (req, res) => {
       "--end",
       "G0 X100 Y0 z3",
       "--off",
-      "\ng0 z3",
+      "\n;tool off\ng0 z3",
       "--on",
       "\n;tool on\ng0 z0",
       "--out",
