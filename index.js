@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/process3", (req, res) => {
-  const { jobId, choice, landscape } = req.body;
+  const { jobId, choice, landscape, portrait } = req.body;
 
   const thresFile = path.join(imageDir, `${jobId}-thres-${choice}.png`);
   const bmpFile = path.join(imageDir, `${jobId}-thres-${choice}.bmp`);
@@ -45,18 +45,12 @@ app.post("/process3", (req, res) => {
   // potrace test01-threshold.bmp -s -o test01.svg
   const time = new Date().valueOf();
   const svgFile = path.join(imageDir, `${jobId}-${time}.svg`);
-  const ret2 = spawnSync("potrace", [
-    bmpFile,
-    "-s",
-    "-W",
-    width,
-    "-H",
-    height,
-    "-A",
-    rotate,
-    "-o",
-    svgFile,
-  ]);
+  let args = [bmpFile, "-s"];
+  if (portrait) {
+    args = args.concat(["-W", width, "-H", height, "-A", rotate]);
+  }
+  args = args.concat(["-o", svgFile]);
+  const ret2 = spawnSync("potrace", args);
 
   if (ret2.status) {
     throw new Error(ret2.stderr.toString("UTF-8"));
@@ -160,7 +154,7 @@ app.post("/process2", (req, res) => {
 });
 
 app.post("/process1", (req, res) => {
-  const { x, y, width, height } = req.body;
+  const { x, y, width, height, portrait } = req.body;
   const jobId = uuidv4();
 
   const base64Image = req.body.photo.split(";base64,").pop();
@@ -175,7 +169,7 @@ app.post("/process1", (req, res) => {
   }
 
   const grayFile = path.join(imageDir, `${jobId}-gray.png`);
-  const ret1 = spawnSync("magick", [
+  let args = [
     "convert",
     uploadFile,
     "-set",
@@ -185,10 +179,12 @@ app.post("/process1", (req, res) => {
     "-average",
     "-crop",
     `${width}x${height}+${x}+${y}`,
-    "-resize",
-    resize,
-    grayFile,
-  ]);
+  ];
+  if (portrait) {
+    args = args.concat(["-resize", resize]);
+  }
+  args.push(grayFile);
+  const ret1 = spawnSync("magick", args);
 
   if (ret1.status) {
     throw new Error(ret1.stderr.toString("UTF-8"));

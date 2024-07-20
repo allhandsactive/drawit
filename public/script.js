@@ -142,13 +142,14 @@
           const img = document.getElementById(`p${i * 9 + 15}`);
           img.src = "/images/loading.gif";
         }
+        const portrait = document.getElementById("portrait").checked;
         document.getElementById("ph1").scrollIntoView(true);
         fetch("/process1", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ ...cropData, photo: photoData }),
+          body: JSON.stringify({ ...cropData, photo: photoData, portrait }),
         })
           .then((res) => res.json())
           .then((data) => {
@@ -232,6 +233,7 @@
     const img = document.getElementById(`p${choice}`);
     const jobId = img.getAttribute("data-job-id");
     const choice1 = parseInt(img.getAttribute("data-choice"), 10);
+    const portrait = document.getElementById("portrait").checked;
     const preview = document.getElementById("download-preview");
     preview.src = "/images/loading.gif";
     document.getElementById("ph3").scrollIntoView(true);
@@ -241,7 +243,12 @@
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ jobId, choice: choice1 + choice - 5, landscape }),
+      body: JSON.stringify({
+        jobId,
+        choice: choice1 + choice - 5,
+        landscape,
+        portrait,
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -250,10 +257,12 @@
         download.href = data.svg;
         const preview = document.getElementById("download-preview");
         preview.src = data.svg;
-        if (landscape) {
-          preview.style = "transform: rotate(90deg)";
-        } else {
-          preview.style = "transform: rotate(180deg)";
+        if (portrait) {
+          if (landscape) {
+            preview.style = "transform: rotate(90deg)";
+          } else {
+            preview.style = "transform: rotate(180deg)";
+          }
         }
         document.getElementById("ph3").scrollIntoView(true);
         const downloadGcode = document.getElementById("download-gcode");
