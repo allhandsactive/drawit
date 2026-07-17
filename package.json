@@ -3,7 +3,7 @@
     "body-parser": "^1.20.6",
     "cropperjs": "^1.6.2",
     "express": "^4.22.2",
-    "uuid": "^14.0.0"
+    "uuid": "^14.0.1"
   },
   "devDependencies": {
     "prettier": "^3.8.2"
