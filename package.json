@@ -6,7 +6,7 @@
     "uuid": "^14.0.0"
   },
   "devDependencies": {
-    "prettier": "^3.8.2"
+    "prettier": "^3.9.5"
   },
   "name": "drawit",
   "description": "A node.js app to take an image and render it as a line drawing",
